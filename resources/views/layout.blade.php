@@ -24,6 +24,13 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title></title>
+    <style>
+      .sort-icon {
+    margin-left: 5px;
+    font-size: 0.8em; /* Adjust size as necessary */
+    }
+
+    </style>
   </head>
   <body>
    <div class="container" id="app">

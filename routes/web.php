@@ -10,7 +10,9 @@ Route::get('/', function () {
 Route::get('/add', [EmployeeController::class, 'index']);
 Route::post('/add', [EmployeeController::class, 'store']);
 Route::get('/fetch_employees', [EmployeeController::class, 'fetchEmployees']);
-Route::get('/edit-employees/{id}', [EmployeeController::class, 'edit']);
+Route::get('/edit-employee/{id}', [EmployeeController::class, 'edit']);
+Route::post('/update-employee/{id}', [EmployeeController::class, 'update']);
+Route::delete('/delete-employee/{id}', [EmployeeController::class, 'destroy']);
 
 
 
