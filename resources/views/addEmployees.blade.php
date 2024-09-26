@@ -93,7 +93,7 @@
 
                         <div class="mb-3">
                             <input type="text" id="search" placeholder="Search by name or email" class="form-control d-inline-block" style="width: auto; display: inline;">
-                            <button id="search-btn" class="btn btn-primary">Search</button>
+                            <button id="search-btn" class="btn btn-dark btn-md">Search</button>
                         </div>
                         <table class="table align-middle mb-0 bg-white">
                             <thead class="bg-light">
@@ -172,6 +172,8 @@
             });
         });
 
+
+
         // Fetch Employees
         function fetchEmployees(page = 1, search = '', sort_by = 'id', sort_order = 'asc') {
             $.ajax({
@@ -192,12 +194,23 @@
                                 '</tr>'
                             );
                         });
-
+        
                         // Handle pagination
-                        let pagination = '';
-                        for (let i = 1; i <= response.employees.last_page; i++) {
-                            pagination += `<button class="page-btn" data-page="${i}">${i}</button>`;
+                        let pagination = '<nav aria-label="Page navigation"><ul class="pagination">';
+        
+                        if (response.employees.current_page > 1) {
+                            pagination += `<li class="page-item"><button class="page-btn btn btn-link" data-page="${response.employees.current_page - 1}">Previous</button></li>`;
                         }
+        
+                        for (let i = 1; i <= response.employees.last_page; i++) {
+                            pagination += `<li class="page-item ${response.employees.current_page === i ? 'active' : ''}"><button class="page-btn btn btn-link" data-page="${i}">${i}</button></li>`;
+                        }
+        
+                        if (response.employees.current_page < response.employees.last_page) {
+                            pagination += `<li class="page-item"><button class="page-btn btn btn-link" data-page="${response.employees.current_page + 1}">Next</button></li>`;
+                        }
+        
+                        pagination += '</ul></nav>';
                         $('#pagination').html(pagination);
                     }
                 },
@@ -206,6 +219,7 @@
                 }
             });
         }
+
 
         $(document).on('click', '#search-btn', function() {
             const search = $('#search').val();
